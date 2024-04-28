@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration of Identity Document</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-api"></script>-->
+
+    <style>
+        body{
+            background-image: url(https://images.template.net/wp-content/uploads/2017/05/docs.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #signature-pad {
+            width: 250px;
+            height: 100px;
+            border: 1px solid #000;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>Identity Document Registration.</h1>
+    <form>
+        <h3>Personal Details.</h3>
+        <input id="name" placeholder="Enter the name..." type="text" required/><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input type="number" id="age" min="17" placeholder="Enter your age..." required><br>
+        <input id="placeOfBirth" placeholder="Place of birth..." type="text" required/><br>
+        <label for="dateOfBirth">Date of birth</label><br>
+        <input id="dateOfBirth" placeholder="Date of Birth..." type="date" required/><br>
+        <label for="street">Street Address:</label><br>
+        <input type="text" id="street" name="street" required><br><br>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" required><br><br>
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state" required><br><br>
+        <label for="zip">Zip Code:</label><br>
+        <input type="text" id="zip" name="zip" required pattern="[0-9]{5}"><br>
+        <h3>Signature</h3>
+            <div id="signature-pad" class="signature-pad">
+                <canvas></canvas>
+            </div>
+            <button id="clear-btn">Clear</button>
+    </form>
+
+    <h3>Required Documents (<span>accepted files:.pdf, .doc, .docx</span>):</h3>
+
+    <label for="proofOfAddress">Proof of Address:</label><br>
+    <input type="file" id="proofOfAddress" name="files" accept=".pdf, .doc, .docx" required/><br><br>
+
+    <label for="birth/id">Birth Certificate/ Identity Document:</label><br>
+    <input type="file" id="birth/id" name="files" accept=".pdf, .doc, .docx"/><br><br>
+
+    <!--<h3>Basic Face Recognition</h3>
+    <video id="video" width="540" height="280" autoplay></video>
+    <canvas id="canvas" width="540" height="280"></canvas>-->
+
+    <button type="submit" form="form" value="Submit">Submit</button>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
+    <script>
+         // Initialize SignaturePad
+         var canvas = document.querySelector("canvas");
+        var signaturePad = new SignaturePad(canvas);
+    
+        // Clear signature function
+        document.getElementById('clear-btn').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+    
+        // You can handle the captured signature data as needed
+        function saveSignature() {
+            var dataURL = signaturePad.toDataURL();
+            // Use dataURL as needed (e.g., save to database, display preview)
+            console.log(dataURL);
+        }
+
+       /* // Get video and canvas elements
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Load models
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('models'),
+            faceapi.nets.faceRecognitionNet.loadFromUri('models')
+        ]).then(startVideo);
+
+        // Start video stream
+        function startVideo() {
+            navigator.mediaDevices.getUserMedia({ video: {} })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => console.error(err));
+        }
+
+        // Detect faces in the video stream
+        video.addEventListener('play', () => {
+            setInterval(async () => {
+                // Detect faces
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks()
+                    .withFaceDescriptors();
+
+                // Resize canvas to match video size
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw detections
+                detections.forEach(detection => {
+                    const box = detection.detection.box;
+                    const drawBox = new faceapi.draw.DrawBox(box, { label: 'Face' });
+                    drawBox.draw(ctx);
+                });
+            }, 100); // Adjust detection frequency here
+        });*/
+    </script>
+</body>
+</html>

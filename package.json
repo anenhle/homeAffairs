@@ -1,0 +1,33 @@
+{
+  "name": "home-affairs-app",
+  "version": "1.0.0",
+  "description": "an app that performs home affairs services.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anenhle/homeAffairsApp.git"
+  },
+  "author": "Anenhle Mbuthuma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anenhle/homeAffairsApp/issues"
+  },
+  "homepage": "https://github.com/anenhle/homeAffairsApp#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongod": "^2.0.0",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.2",
+    "multer": "^1.4.5-lts.1",
+    "stripe": "^15.4.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

@@ -1,0 +1,286 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Registration.</title>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@^8.3.2/dist/umd/uuidv4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/signature_pad/dist/signature-pad.css">
+    <style>
+        body{
+            background-image: url(https://images.template.net/wp-content/uploads/2017/05/docs.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .parentsDetails {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .signature-pad {
+            width: 300px;
+            height: 150px;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        #dadForm {
+            margin-left:80px;
+        }
+
+        #submit{
+            width: 150px;
+            height: 30px;
+            border: 2px solid black;
+            border-radius: 20px;
+            margin-left: 7px;
+        }
+        #sumbit:hover {
+            color:white;
+            background-color: aquamarine;
+        }
+
+    </style>
+ </head>
+ <body>
+    <h1>Birth Registration.</h1>
+    <form>
+        <h3>Child's Details.</h3>
+        <input id="name" placeholder="Enter the name..." type="text" required/><br><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br><br>
+        <input id="placeOfBirth" placeholder="Place of birth..." type="text" required/><br><br>
+        <label for="dateOfBirth">Date of birth</label><br>
+        <input id="dateOfBirth" placeholder="Date of Birth..." type="date" required/>
+    </form>
+
+    <div class="parentsDetails">
+        <form>
+            <h3>Maternal's Details</h3>
+            <input id="maternalName" placeholder="Enter the name..." type="text" required /><br><br>
+            <input id="maternalId" placeholder="Enter the identity number..." type="text" required/><br><br>
+            <input id="maternalPlaceOfBirth" placeholder="Place of birth..." type="text" required/><br><br>
+            <label for="dateOfBirth">Date of birth</label><br>
+            <input id="maternalDateOfBirth" placeholder="Date of Birth..." type="date" required/><br><br>
+            <h3>Signature</h3>
+            <div id="signature-pad1" class="signature-pad">
+                <canvas id="canvas1"></canvas>
+            </div><br>
+            <button id="clear-btn1">Clear</button>
+        </form>
+
+        <form id="dadForm">
+            <h3>Paternal's Details</h3>
+            <input id="paternalName" placeholder="Enter the name..." type="text" required /><br><br>
+            <input id="paternalId" placeholder="Enter the identity number..." type="text" required/><br><br>
+            <input id="paternalPlaceOfBirth" placeholder="Place of birth..." type="text" required/><br><br>
+            <label for="dateOfBirth">Date of birth</label><br>
+            <input id="paternalDateOfBirth" placeholder="Date of Birth..." type="date" required/><br><br>
+            <h3>Signature</h3>
+            <div id="signature-pad2" class="signature-pad">
+                <canvas id="canvas2"></canvas>
+            </div><br>
+            <button id="clear-btn2">Clear</button>
+        </form>
+    </div>
+
+    <h3>Required Documents (<span>accepted files:.pdf, .doc, .docx</span>):</h3>
+
+    <label for="proofID">Proof of Identity Document:</label><br>
+    <input type="file" id="proofID" name="files" accept=".pdf, .doc, .docx" required/><br><br>
+
+    <label for="marriageCertificate">Marriage Certificate (optional):</label><br>
+    <input type="file" id="marriageCertificate" name="files" accept=".pdf, .doc, .docx"/><br><br>
+
+    <label for="birthNotification">Birth Notification:</label><br>
+    <input type="file" id="birthNotification" name="files" accept=".pdf, .doc, .docx" required/><br><br>
+
+    <!-- Generate a UUID for the user ID -->
+    <input type="hidden" id="userID" name="userID">
+
+    <button type="submit" id="submit">Submit</button>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
+    
+    <script>
+        // Initialize SignaturePad
+        var canvas = document.getElementById("canvas1");
+        var signaturePad1 = new SignaturePad(canvas);
+
+        var canvas = document.getElementById("canvas2");
+        var signaturePad2 = new SignaturePad(canvas);
+    
+        // Clear signature function
+        document.getElementById('clear-btn1').addEventListener('click', function () {
+            signaturePad1.clear();
+        });
+
+        document.getElementById('clear-btn2').addEventListener('click', function () {
+            signaturePad2.clear();
+        });
+    
+        // You can handle the captured signature data as needed
+        function saveSignature() {
+            var dataURL = signaturePad1.toDataURL();
+            // Use dataURL as needed (e.g., save to database, display preview)
+            console.log(dataURL);
+        }
+
+        function saveSignature() {
+            var dataURL = signaturePad2.toDataURL();
+            // Use dataURL as needed (e.g., save to database, display preview)
+            console.log(dataURL);
+        }
+
+
+        //required documents field.
+        document.getElementById('proofID').addEventListener('change', function(event) {
+            const fileList = event.target.files;
+            console.log('Selected file(s):', fileList);
+            
+        });
+        document.getElementById('marriageCertificate').addEventListener('change', function(event) {
+            const fileList = event.target.files;
+            console.log('Selected file(s):', fileList);
+            
+        });
+        document.getElementById('birthNotification').addEventListener('change', function(event) {
+            const fileList = event.target.files;
+            console.log('Selected file(s):', fileList);
+            
+        });
+
+        //generate random uuid for user id
+        const userID = uuidv4();
+        document.getElementById('userID').value = userID;
+
+        // Function to validate input fields
+        function validateForm() {
+            // Child's details
+            var childName = document.getElementById("name").value.trim();
+            var genderMale = document.getElementById("male").checked;
+            var genderFemale = document.getElementById("female").checked;
+            var placeOfBirth = document.getElementById("placeOfBirth").value.trim();
+            var dateOfBirth = document.getElementById("dateOfBirth").value.trim();
+
+            // Maternal's details
+            var maternalName = document.getElementById("maternalName").value.trim();
+            var maternalId = document.getElementById("maternalId").value.trim();
+            var maternalPlaceOfBirth = document.getElementById("maternalPlaceOfBirth").value.trim();
+            var maternalDateOfBirth = document.getElementById("maternalDateOfBirth").value.trim();
+
+            // Paternal's details
+            var paternalName = document.getElementById("paternalName").value.trim();
+            var paternalId = document.getElementById("paternalId").value.trim();
+            var paternalPlaceOfBirth = document.getElementById("paternalPlaceOfBirth").value.trim();
+            var paternalDateOfBirth = document.getElementById("paternalDateOfBirth").value.trim();
+
+            // Required Documents
+            var proofID = document.getElementById("proofID").value.trim();
+            var birthNotification = document.getElementById("birthNotification").value.trim();
+
+            // Check if any field is empty
+            if (childName === "" || (!genderMale && !genderFemale) || placeOfBirth === "" || dateOfBirth === "" ||
+                maternalName === "" || maternalId === "" || maternalPlaceOfBirth === "" || maternalDateOfBirth === "" ||
+                paternalName === "" || paternalId === "" || paternalPlaceOfBirth === "" || paternalDateOfBirth === "" ||
+                proofID === "" || birthNotification === "") {
+                alert("Please fill in all the required fields.");
+                return false;
+            }
+            return true;
+        }
+
+        // Trigger click event on submit button
+        document.getElementById('submit').addEventListener('click', function() {
+            if (validateForm()) {
+                document.getElementById('submit').click();
+            }
+        });
+
+        //use the Fetch API to send the form data to your backend server
+
+        document.getElementById('submit').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+            
+            // Get form data
+            var formData = {
+                name: document.getElementById('name').value,
+                gender: document.querySelector('input[name="gender"]:checked').value,
+                placeOfBirth: document.getElementById('placeOfBirth').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                maternalName: document.getElementById('maternalName').value,
+                maternalId: document.getElementById('maternalId').value,
+                maternalPlaceOfBirth: document.getElementById('maternalPlaceOfBirth').value,
+                maternalDateOfBirth: document.getElementById('maternalDateOfBirth').value,
+                paternalName: document.getElementById('paternalName').value,
+                paternalId: document.getElementById('paternalId').value,
+                paternalPlaceOfBirth: document.getElementById('paternalPlaceOfBirth').value,
+                paternalDateOfBirth: document.getElementById('paternalDateOfBirth').value,
+                proofID: document.getElementById('proofID').files[0],
+                marriageCertificate: document.getElementById('marriageCertificate').files[0],
+                birthNotification: document.getElementById('birthNotification').files[0],
+                userID: document.getElementById('userID').value
+            };
+            
+            // Create FormData object to send files
+            var formDataToSend = new FormData();
+            Object.keys(formData).forEach(function(key) {
+                formDataToSend.append(key, formData[key]);
+            });
+            
+            // Send data to backend
+            fetch('/your-backend-endpoint', {
+                method: 'POST',
+                body: formDataToSend
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received from server:', data);
+                // Handle success response from server
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                // Handle error
+            });
+        });
+
+
+        // Fetch data from the backend
+        fetch('http://localhost:5000/public/birth.html')
+        .then(response => response.json())
+        .then(data => {
+            window.document.body.innerHTML = document.getElementById('name').value = data.name;
+                document.querySelector('input[name="gender"][value="' + data.gender +'"]').checked = true;
+                document.getElementById('placeOfBirth').value = data.placeOfBirth;
+                document.getElementById('dateOfBirth').value = data.dateOfBirth;
+                document.getElementById('maternalName').value = data.maternalName;
+                document.getElementById('maternalId').value = data.maternalId;
+                document.getElementById('maternalPlaceOfBirth').value = data.maternalPlaceOfBirth;
+                document.getElementById('maternalDateOfBirth').value = data.maternalDateOfBirth;
+                document.getElementById('paternalName').value = data.paternalName;
+                document.getElementById('paternalId').value = data.paternalId;
+                document.getElementById('paternalPlaceOfBirth').value = data.paternalPlaceOfBirth;
+                document.getElementById('paternalDateOfBirth').value = data.paternalDateOfBirth;
+                document.getElementById('proofID').files[0] = data.proofID;
+                document.getElementById('marriageCertificate').files[0] = data.marriageCertificate;
+                document.getElementById('birthNotification').files[0] = data.birthNotification;
+                document.getElementById('userID').value = data.userID;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    </script>
+    
+ </body>
+ </html>

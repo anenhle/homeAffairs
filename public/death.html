@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Death Registration</title>
+    <style>
+        body{
+            background-image: url(https://images.template.net/wp-content/uploads/2017/05/docs.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        #signature-pad {
+            width: 250px;
+            height: 100px;
+            border: 1px solid #000;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>Death Registration.</h1>
+    <form>
+        <h3>Deceased's Details.</h3>
+        <input id="name" placeholder="Enter the name..." type="text" required/><br><br>
+        <input id="id" placeholder="Enter ID number..." type="text" required/><br><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input id="placeOfBirth" placeholder="Place of birth..." type="text" required/><br><br>
+        <label for="dateOfBirth">Date of birth</label><br>
+        <input id="dateOfBirth" placeholder="Date of Birth..." type="date" required/><br><br>
+        <label for="dateOfDeath">Date of death</label><br>
+        <input id="dateOfDeath" placeholder="Date of Death..." type="date" required/>
+    </form>
+
+    <form>
+        <h3>Beneficiary's Details.</h3>
+        <input id="name" placeholder="Enter the name..." type="text" required/><br><br>
+        <input id="id" placeholder="Enter ID number..." type="text" required/><br><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input id="placeOfBirth" placeholder="Place of birth..." type="text" required/><br><br>
+        <label for="dateOfBirth">Date of birth</label><br>
+        <input id="dateOfBirth" placeholder="Date of Birth..." type="date" required/><br><br>
+        <label for="street">Street Address:</label><br>
+        <input type="text" id="street" name="street" required><br><br>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" required><br><br>
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state" required><br><br>
+        <label for="zip">Zip Code:</label><br>
+        <input type="text" id="zip" name="zip" required pattern="[0-9]{5}">
+        <h3>Signature</h3>
+        <div id="signature-pad" class="signature-pad">
+             <canvas></canvas>
+        </div>
+         <button id="clear-btn">Clear</button>
+    </form>
+
+        <h3>Required Documents (<span>accepted files:.pdf, .doc, .docx</span>):</h3>
+
+        <label for="proofOfDeath">Notification of death:</label><br>
+        <input type="file" id="proofOfDeath" name="files" accept=".pdf, .doc, .docx" required/><br><br>
+
+        <label for="medicalCertificate">Medical Certificate:</label><br>
+        <input type="file" id="medicalCertificate" name="files" accept=".pdf, .doc, .docx"/><br><br>
+    
+    <button type="submit" id="submit">Submit</button>
+
+    <script>
+        // Initialize SignaturePad
+        var canvas = document.querySelector("canvas");
+        var signaturePad = new SignaturePad(canvas);
+    
+        // Clear signature function
+        document.getElementById('clear-btn').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+    
+        // You can handle the captured signature data as needed
+        function saveSignature() {
+            var dataURL = signaturePad.toDataURL();
+            // Use dataURL as needed (e.g., save to database, display preview)
+            console.log(dataURL);
+        }
+    </script>
+</body>
+</html>
